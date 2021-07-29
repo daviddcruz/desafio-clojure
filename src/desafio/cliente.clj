@@ -6,8 +6,3 @@
                             :cpf   12345678910
                             :email "teste@teste.com"}))
 
-
-; (def cliente {:nome  "David Cruz"
-;              :cpf   12345678910
-;              :email "teste@teste.com"})
-

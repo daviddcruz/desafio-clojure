@@ -1,4 +1,8 @@
 (ns desafio.compra)
 
-(defrecord Compra [data valor estabelecimento categoria cartao-numero])
+(defrecord Compra [data
+                   valor
+                   estabelecimento
+                   categoria
+                   cartao-numero])
 
