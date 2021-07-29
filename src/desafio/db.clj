@@ -1,5 +1,5 @@
 (ns desafio.db
-  (:require [desafio.compra :refer [->Compra]]))
+  (:require [desafio.compra :refer [map->Compra]]))
 
 (def compra [
              (map->Compra
