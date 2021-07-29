@@ -3,6 +3,12 @@
 
 (use '[java-time :only (format)])
 
+(defn retorna-todas-compras [] (d.db/retorna-todas-compras))
+
+(defn retorna-clientes [] (d.db/retorna-clientes))
+
+(defn retorna-cartoes [] (d.db/retorna-cartoes))
+
 (defn total-das-compras
   [compras]
   (->> compras
@@ -16,9 +22,13 @@
    }
   )
 
+(defn retorna-dados-cartao
+  [cartao-id]
+  (filter #(= (:cartao-id %) cartao-id) (retorna-cartoes)))
+
 (defn gastos-compras-por-cartao
   [[cartao compras]]
-  {:cartao      cartao
+  {:cartao      (:numero (first (retorna-dados-cartao cartao)))
    :gasto-total (total-das-compras compras)
    }
   )
@@ -28,10 +38,13 @@
   (= (format "MM" (:data compra)) mes))
 
 (defn fatura-por-mes [mes] (->>
-                             d.db/compra
+                             (d.db/retorna-todas-compras)
                              (filter #(comprou-no-mes? % mes))
                              (group-by :cartao-id)
                              (map gastos-compras-por-cartao)))
+
+
+
 
 (defn total-compras-por-categoria [] (map
                                        gastos-compras-por-categoria
@@ -42,11 +55,6 @@
   [estabelecimento] (filter (fn
                               [compra]
                               (identical? (:estabelecimento compra) estabelecimento))
-                              (d.db/retorna-todas-compras)))
+                            (d.db/retorna-todas-compras)))
 
 
-(defn retorna-todas-compras [] (d.db/retorna-todas-compras))
-
-(defn retorna-cliente [] (d.db/retorna-cliente))
-
-(defn retorna-cartao [] (d.db/retorna-cartao))

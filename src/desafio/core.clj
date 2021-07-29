@@ -2,11 +2,11 @@
   (:require [desafio.logic.logic :as d.logic]))
 
 
-(println "Dados do Cliente:")
-(println (d.logic/retorna-cliente))
+(println "Clientes:")
+(println (d.logic/retorna-clientes))
 
-(println "Dados do Cartão:")
-(println (d.logic/retorna-cartao))
+(println "Cartões:")
+(println (d.logic/retorna-cartoes))
 
 (println "Compras realizadas:")
 (println (d.logic/retorna-todas-compras))
@@ -19,3 +19,4 @@
 
 (println "Gasto por mês:")
 (println (d.logic/fatura-por-mes "02"))
+
