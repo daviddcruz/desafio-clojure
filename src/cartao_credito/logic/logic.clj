@@ -1,5 +1,5 @@
-(ns desafio.logic.logic
-  (:require [desafio.db.db :as d.db]))
+(ns cartao_credito.logic.logic
+  (:require [cartao_credito.db.db :as d.db]))
 
 (use '[java-time :only (format)])
 
@@ -24,11 +24,15 @@
 
 (defn retorna-dados-cartao
   [cartao-id]
-  (filter #(= (:cartao-id %) cartao-id) (retorna-cartoes)))
+  (filter (fn
+            [cartao]
+            (= (:cartao-id cartao) cartao-id)
+            ))
+  (retorna-cartoes))
 
 (defn gastos-compras-por-cartao
-  [[cartao compras]]
-  {:cartao      (:numero (first (retorna-dados-cartao cartao)))
+  [[cartao-id compras]]
+  {:cartao      (:numero (first (retorna-dados-cartao cartao-id)))
    :gasto-total (total-das-compras compras)
    }
   )
@@ -45,16 +49,18 @@
 
 
 
-
-(defn total-compras-por-categoria [] (map
-                                       gastos-compras-por-categoria
-                                       (group-by :categoria (d.db/retorna-todas-compras))))
-
+(defn total-compras-por-categoria
+  []
+  (->> (d.db/retorna-todas-compras)
+       (group-by :categoria)
+       (map gastos-compras-por-categoria)
+       )
+  )
 
 (defn compras-por-estabelecimento
-  [estabelecimento] (filter (fn
-                              [compra]
-                              (identical? (:estabelecimento compra) estabelecimento))
-                            (d.db/retorna-todas-compras)))
-
-
+  [estabelecimento]
+  (->> (d.db/retorna-todas-compras)
+       (filter (fn
+                 [compra]
+                 (= (:estabelecimento compra) estabelecimento)))
+       ))

@@ -1,4 +1,4 @@
-(ns desafio.model.compra)
+(ns cartao_credito.model.compra)
 
 (defrecord Compra [
                    compra-id
@@ -16,10 +16,8 @@
    categoria
    cartao-id]
   (->Compra (str (java.util.UUID/randomUUID))
-             data
-             valor
-             estabelecimento
-             categoria
-             cartao-id))
-
-
+            data
+            valor
+            estabelecimento
+            categoria
+            cartao-id))
