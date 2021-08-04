@@ -3,12 +3,16 @@
             [compra.model :as c.model]))
 
 (s/defn cria-nova-compra :- c.model/Compra
-  [data :- s/Str
+  [
+   id :- s/Uuid
+   data :- s/Str
    valor :- s/Num
    estabelecimento :- s/Str
    categoria :- s/Str
    cartao-id :- s/Uuid]
-  {:id        (java.util.UUID/randomUUID)
+  {
+   ;:id        (java.util.UUID/randomUUID)
+   :id id
    :data             data
    :valor            valor
    :estabelecimento  estabelecimento
@@ -71,5 +75,7 @@
     (filter #(comprou-no-mes? % mes))
     (group-by :cartao-id)
     (map gastos-compras-por-cartao ,,, cartoes)))
+
+(defn listar-compras [compras] compras)
 
 
