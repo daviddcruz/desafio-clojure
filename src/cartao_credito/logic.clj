@@ -17,3 +17,6 @@
    :limite     limite
    :cliente-id cliente-id
    })
+
+
+(defn listar-cartoes [cartoes] cartoes)

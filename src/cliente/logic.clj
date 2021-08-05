@@ -15,3 +15,5 @@
    :email email
    })
 
+
+(defn listar-clientes [clientes] clientes)

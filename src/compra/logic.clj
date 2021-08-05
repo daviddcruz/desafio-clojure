@@ -1,23 +1,26 @@
 (ns compra.logic
   (:require [schema.core :as s]
-            [compra.model :as c.model]))
+            [compra.model :as c.model])
+  (:use [java-time :only [local-date local-date?]]))
+
+(def LocalDate (s/pred local-date? 'data-valida))
 
 (s/defn cria-nova-compra :- c.model/Compra
   [
    id :- s/Uuid
-   data :- s/Str
+   data :- LocalDate
    valor :- s/Num
    estabelecimento :- s/Str
    categoria :- s/Str
    cartao-id :- s/Uuid]
   {
    ;:id        (java.util.UUID/randomUUID)
-   :id id
-   :data             data
-   :valor            valor
-   :estabelecimento  estabelecimento
-   :categoria        categoria
-   :cartao-id cartao-id})
+   :id              id
+   :data            (str data)
+   :valor           valor
+   :estabelecimento estabelecimento
+   :categoria       categoria
+   :cartao-id       cartao-id})
 
 
 (defn total-das-compras
@@ -45,7 +48,7 @@
        (filter #(= (:estabelecimento %) estabelecimento))))
 
 
-(defn obtem-o-mes [compra] (subs (:data compra) 3 5))
+(defn obtem-o-mes [compra] (subs (:data compra) 5 7))
 
 (defn comprou-no-mes?
   [compra mes]
@@ -63,18 +66,17 @@
 
 (defn gastos-compras-por-cartao
   [[cartao-id compras] cartoes]
-  (println "cartoes:" cartoes)
-  {:cartao      (:numero (first (retorna-dados-cartao cartao-id [])))
+  {:cartao      (:numero (retorna-dados-cartao cartao-id cartoes))
    :gasto-total (total-das-compras compras)
    })
 
 (defn fatura-por-mes
   [mes compras cartoes]
-  (->>
-    compras
-    (filter #(comprou-no-mes? % mes))
-    (group-by :cartao-id)
-    (map gastos-compras-por-cartao ,,, cartoes)))
+  (let [compra (->>
+                 compras
+                 (filter #(comprou-no-mes? % mes))
+                 (group-by :cartao-id))]
+    (map gastos-compras-por-cartao compra cartoes)))
 
 (defn listar-compras [compras] compras)
 
