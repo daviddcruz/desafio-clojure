@@ -1,12 +1,10 @@
 (ns desafio.compra.logic-test
   (:require [clojure.test :refer :all]
-            [clojure.test.check.generators :as gen]
             [compra.logic :as c.logic]
             [compra.db :as c.db]
             [schema.test :as schema.test]
             [matcher-combinators.test :refer [match?]]
-            [clojure.test.check.clojure-test :refer [defspec]]
-            )
+            [clojure.test.check.clojure-test :refer [defspec]])
   (:use [java-time :only [local-date]])
   (:use [clojure.pprint]))
 
@@ -49,8 +47,6 @@
            }
           (first (c.logic/listar-compras c.db/compras))
           ))))
-
-
 
 (deftest gastos-por-categoria-test
   (testing "valida retorno dos gastos por categoria"
