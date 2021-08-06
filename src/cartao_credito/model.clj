@@ -4,7 +4,7 @@
 
 (s/set-fn-validation! true)
 
-(def Cartao {:id         s/Uuid
+(def Cartao {:cartao-id  s/Uuid
              :numero     s/Num
              :cvv        s/Num
              :validade   s/Str

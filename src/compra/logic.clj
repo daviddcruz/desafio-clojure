@@ -7,7 +7,7 @@
 
 (s/defn cria-nova-compra :- c.model/Compra
   [
-   id :- s/Uuid
+   compra-id :- s/Uuid
    data :- LocalDate
    valor :- s/Num
    estabelecimento :- s/Str
@@ -15,7 +15,7 @@
    cartao-id :- s/Uuid]
   {
    ;:id        (java.util.UUID/randomUUID)
-   :id              id
+   :compra-id       compra-id
    :data            (str data)
    :valor           valor
    :estabelecimento estabelecimento

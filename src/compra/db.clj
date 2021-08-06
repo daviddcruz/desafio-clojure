@@ -1,7 +1,6 @@
 (ns compra.db
   (:require [schema.core :as s]
-            [compra.logic :as compra.logic]
-            [cartao_credito.db :as cartao.db])
+            [compra.logic :as compra.logic])
   (:use [java-time :only [local-date]]))
 
 (def compras [

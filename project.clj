@@ -6,5 +6,10 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [clojure.java-time "0.3.2"]
                  [prismatic/schema "1.1.12"]
-                 [org.clojure/test.check "1.1.0"]]
-  :repl-options {:init-ns server})
+                 [org.clojure/test.check "1.1.0"]
+                 [nubank/matcher-combinators "3.3.0"]
+                 [prismatic/schema-generators "0.1.3"]]
+
+  :repl-options {:init-ns server}
+
+  )

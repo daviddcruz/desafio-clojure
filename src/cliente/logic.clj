@@ -5,14 +5,15 @@
 
 (s/defn cria-novo-cliente :- c.model/Cliente
   [
+   cliente-id :- s/Uuid
    nome :- s/Str
    cpf :- s/Num
    email :- s/Str
    ]
-  {:id    (java.util.UUID/randomUUID),
-   :nome  nome,
-   :cpf   cpf,
-   :email email
+  {:cliente-id cliente-id,
+   :nome       nome,
+   :cpf        cpf,
+   :email      email
    })
 
 

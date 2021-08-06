@@ -1,10 +1,13 @@
 (ns server
   (:require [cliente.db :as cliente.db]
-            [cartao_credito.db :as cartao.db]
-            [compra.db :as compra.db]
-            [cliente.logic :as cliente.logic]
             [cartao_credito.logic :as cartao.logic]
-            [compra.logic :as compra.logic])
+            [cartao_credito.db :as cartao.db]
+            [cliente.logic :as cliente.logic]
+            [compra.db :as compra.db]
+            [clojure.test.check.generators :as gen]
+            [compra.logic :as compra.logic]
+            [cliente.model :as c.model]
+            )
   (:use [clojure.pprint]))
 
 
@@ -25,7 +28,6 @@
 
 (println "\n\n Gasto por mês:")
 (pprint (compra.logic/fatura-por-mes "03" compra.db/compras cartao.db/cartoes))
-
 
 
 

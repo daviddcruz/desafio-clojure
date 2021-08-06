@@ -4,13 +4,15 @@
 
 
 (s/defn cria-novo-cartao :- c.model/Cartao
-  [numero :- s/Num
+  [
+   cartao-id :- s/Uuid
+   numero :- s/Num
    cvv :- s/Num
    validade :- s/Str
    limite :- s/Num
    cliente-id :- s/Uuid
    ]
-  {:id         (java.util.UUID/randomUUID)
+  {:cartao-id  cartao-id
    :numero     numero
    :cvv        cvv
    :validade   validade
