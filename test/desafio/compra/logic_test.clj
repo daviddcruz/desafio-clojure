@@ -1,12 +1,17 @@
 (ns desafio.compra.logic-test
   (:require [clojure.test :refer :all]
-            [compra.logic :as c.logic]
+            [compra.compra :as c.logic]
             [compra.db :as c.db]
             [schema.test :as schema.test]
+            [clojure.test.check.properties :as p]
+            [compra.compra :as c.model]
+            [schema-generators.generators :as g]
             [matcher-combinators.test :refer [match?]]
+            [clojure.test.check.generators :as gen]
             [clojure.test.check.clojure-test :refer [defspec]])
   (:use [java-time :only [local-date]])
-  (:use [clojure.pprint]))
+  (:use [clojure.pprint])
+  (:use [java-time :only [local-date]]))
 
 (use-fixtures :once schema.test/validate-schemas)
 
@@ -57,4 +62,35 @@
           (c.logic/total-compras-por-categoria c.db/compras)
           ))))
 
+
+;(defspec realiza-compras 50
+;         (prop/for-all
+;           [compras (gen/vector compra-gen 0 10)]
+;           (let [compras-final (reduce adiciona-compra {} compras)]
+;             (is (= (count compras) (count compras-final))))))
+
+;(gen/fmap (fn [x] (time/+d #nu/date "2015-10-01" x)) gen/small-integer)
+(def data-gen
+  (gen/fmap (fn [[dia mes]]
+              (str dia "/" mes "/2021"))
+            (gen/tuple (gen/choose 1 28)
+                       (gen/choose 1 12))))
+
+
+
+(defspec teste-de-baseado-em-propriedade 3
+         (p/for-all [compra (g/generator  c.model/Compra)]
+
+                    (println "**************")
+                    (pprint compra)
+                    (println "**************\n")
+                    (= 1 1)))
+
+;(defspec addition-is-commutative
+;         (p/for-all [ints (gen/vector gen/small-integer)]
+;                    (println "\n**************")
+;                    (println ints)
+;                    (print "**************")
+;                    (= (apply count ints)
+;                       (apply count (reverse ints)))))
 
